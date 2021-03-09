@@ -105,10 +105,10 @@ class PromotedStoryListViewModelTest {
   fun testPromotedStoryListViewModelEquals_reflexiveStoryListOf2_isEqual() {
     launch<HomeFragmentTestActivity>(
       HomeFragmentTestActivity.createHomeFragmentTestActivity(context)
-    ).use { activityScenario ->
-      activityScenario.onActivity { homeFragmentTestActivity ->
+    ).use {
+      it.onActivity {
         val promotedStoryListViewModel = createPromotedStoryListViewModel(
-          homeFragmentTestActivity, listOf(promotedStory1, promotedStory2), promotedActivityList1
+          it, listOf(promotedStory1, promotedStory2), promotedActivityList1
         )
 
         // Verify the reflexive property of equals(): a == a.
@@ -121,15 +121,15 @@ class PromotedStoryListViewModelTest {
   fun testPromotedStoryListViewModelEquals_symmetricStoryListOf2_isEqual() {
     launch<HomeFragmentTestActivity>(
       HomeFragmentTestActivity.createHomeFragmentTestActivity(context)
-    ).use { activityScenario ->
-      activityScenario.onActivity { homeFragmentTestActivity ->
+    ).use {
+      it.onActivity {
         val promotedStoryListViewModel = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
         val promotedStoryListViewModelCopy = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
@@ -145,20 +145,20 @@ class PromotedStoryListViewModelTest {
   fun testPromotedStoryListViewModelEquals_transitiveStoryListOf2_isEqual() {
     launch<HomeFragmentTestActivity>(
       HomeFragmentTestActivity.createHomeFragmentTestActivity(context)
-    ).use { activityScenario ->
-      activityScenario.onActivity { homeFragmentTestActivity ->
+    ).use {
+      it.onActivity {
         val promotedStoryListViewModelCopy1 = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
         val promotedStoryListViewModelCopy2 = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
         val promotedStoryListViewModelCopy3 = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
@@ -175,15 +175,15 @@ class PromotedStoryListViewModelTest {
   fun testPromotedStoryListViewModelEquals_consistentStoryListOf2_isEqual() {
     launch<HomeFragmentTestActivity>(
       HomeFragmentTestActivity.createHomeFragmentTestActivity(context)
-    ).use { activityScenario ->
-      activityScenario.onActivity { homeFragmentTestActivity ->
+    ).use {
+      it.onActivity {
         val promotedStoryListViewModel = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
         val promotedStoryListViewModelCopy = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
@@ -200,10 +200,10 @@ class PromotedStoryListViewModelTest {
   fun testPromotedStoryListViewModelEquals_storyListOf2AndNull_isNotEqual() {
     launch<HomeFragmentTestActivity>(
       HomeFragmentTestActivity.createHomeFragmentTestActivity(context)
-    ).use { activityScenario ->
-      activityScenario.onActivity { homeFragmentTestActivity ->
+    ).use {
+      it.onActivity {
         val promotedStoryListViewModel = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
@@ -218,15 +218,15 @@ class PromotedStoryListViewModelTest {
   fun testPromotedStoryListViewModelEquals_storyListOf2AndStoryListOf3_isNotEqual() {
     launch<HomeFragmentTestActivity>(
       HomeFragmentTestActivity.createHomeFragmentTestActivity(context)
-    ).use { activityScenario ->
-      activityScenario.onActivity { homeFragmentTestActivity ->
+    ).use {
+      it.onActivity {
         val promotedStoryListViewModelOf2 = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
         val promotedStoryListViewModelOf3 = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2, promotedStory3),
           promotedActivityList1
         )
@@ -240,15 +240,15 @@ class PromotedStoryListViewModelTest {
   fun testPromotedStoryListViewModelHashCode_viewModelsEqualHashCodesEqual_isEqual() {
     launch<HomeFragmentTestActivity>(
       HomeFragmentTestActivity.createHomeFragmentTestActivity(context)
-    ).use { activityScenario ->
-      activityScenario.onActivity { homeFragmentTestActivity ->
+    ).use {
+      it.onActivity {
         val promotedStoryListViewModel = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
         val promotedStoryListCopy = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
@@ -265,10 +265,10 @@ class PromotedStoryListViewModelTest {
   fun testPromotedStoryListViewModelHashCode_sameViewModelHashCodeDoesNotChange_isEqual() {
     launch<HomeFragmentTestActivity>(
       HomeFragmentTestActivity.createHomeFragmentTestActivity(context)
-    ).use { activityScenario ->
-      activityScenario.onActivity { homeFragmentTestActivity ->
+    ).use {
+      it.onActivity {
         val promotedStoryListViewModel = createPromotedStoryListViewModel(
-          homeFragmentTestActivity,
+          it,
           listOf(promotedStory1, promotedStory2),
           promotedActivityList1
         )
