@@ -58,7 +58,7 @@ check_os_type() {
     os_type="Darwin"
   else
     echo "Protobuf lint check not available on $OSTYPE"
-    exit 0
+    exit 1
   fi
 }
 
