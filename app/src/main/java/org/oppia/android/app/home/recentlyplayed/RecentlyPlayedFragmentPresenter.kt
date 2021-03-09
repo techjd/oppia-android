@@ -75,20 +75,58 @@ class RecentlyPlayedFragmentPresenter @Inject constructor(
   private fun subscribeToOngoingStoryList() {
     getAssumedSuccessfulPromotedActivityList().observe(
       fragment,
-      {
+      Observer<PromotedActivityList> { it ->
         if (it.promotedStoryList.recentlyPlayedStoryList.isNotEmpty()) {
-          binding.recentlyPlayedToolbar.title = activity.getString(R.string.recently_played_stories)
-          addRecentlyPlayedStoryListSection(it.promotedStoryList.recentlyPlayedStoryList)
+          val recentSectionTitleViewModel =
+            SectionTitleViewModel(activity.getString(R.string.ongoing_story_last_week), false)
+          itemList.add(recentSectionTitleViewModel)
+          for (promotedStory in it.promotedStoryList.recentlyPlayedStoryList) {
+            val ongoingStoryViewModel =
+              OngoingStoryViewModel(
+                promotedStory,
+                entityType,
+                fragment as OngoingStoryClickListener
+              )
+            itemList.add(ongoingStoryViewModel)
+          }
         }
 
         if (it.promotedStoryList.olderPlayedStoryList.isNotEmpty()) {
-          binding.recentlyPlayedToolbar.title = activity.getString(R.string.recently_played_stories)
-          addOlderStoryListSection(it.promotedStoryList.olderPlayedStoryList)
+          val showDivider = itemList.isNotEmpty()
+          val olderSectionTitleViewModel =
+            SectionTitleViewModel(
+              activity.getString(R.string.ongoing_story_last_month),
+              showDivider
+            )
+          itemList.add(olderSectionTitleViewModel)
+          for (promotedStory in it.promotedStoryList.olderPlayedStoryList) {
+            val ongoingStoryViewModel =
+              OngoingStoryViewModel(
+                promotedStory,
+                entityType,
+                fragment as OngoingStoryClickListener
+              )
+            itemList.add(ongoingStoryViewModel)
+          }
         }
 
         if (it.promotedStoryList.suggestedStoryList.isNotEmpty()) {
-          binding.recentlyPlayedToolbar.title = activity.getString(R.string.stories_for_you)
-          addRecommendedStoryListSection(it.promotedStoryList.suggestedStoryList)
+          val showDivider = itemList.isNotEmpty()
+          val recommendedSectionTitleViewModel =
+            SectionTitleViewModel(
+              activity.getString(R.string.recommended_stories),
+              showDivider
+            )
+          itemList.add(recommendedSectionTitleViewModel)
+          for (suggestedStory in it.promotedStoryList.suggestedStoryList) {
+            val ongoingStoryViewModel =
+              OngoingStoryViewModel(
+                suggestedStory,
+                entityType,
+                fragment as OngoingStoryClickListener
+              )
+            itemList.add(ongoingStoryViewModel)
+          }
         }
 
         binding.ongoingStoryRecyclerView.layoutManager =
@@ -100,54 +138,6 @@ class RecentlyPlayedFragmentPresenter @Inject constructor(
         ongoingListAdapter.notifyDataSetChanged()
       }
     )
-  }
-
-  private fun addRecentlyPlayedStoryListSection(
-    recentlyPlayedStoryList: MutableList<PromotedStory>
-  ) {
-    val recentSectionTitleViewModel =
-      SectionTitleViewModel(activity.getString(R.string.ongoing_story_last_week), false)
-    itemList.add(recentSectionTitleViewModel)
-    for (promotedStory in recentlyPlayedStoryList) {
-      val ongoingStoryViewModel = getOngoingStoryViewModel(promotedStory)
-      itemList.add(ongoingStoryViewModel)
-    }
-  }
-
-  private fun getOngoingStoryViewModel(promotedStory: PromotedStory): RecentlyPlayedItemViewModel {
-    return OngoingStoryViewModel(
-      promotedStory,
-      entityType,
-      fragment as OngoingStoryClickListener
-    )
-  }
-
-  private fun addOlderStoryListSection(olderPlayedStoryList: List<PromotedStory>) {
-    val showDivider = itemList.isNotEmpty()
-    val olderSectionTitleViewModel =
-      SectionTitleViewModel(
-        activity.getString(R.string.ongoing_story_last_month),
-        showDivider
-      )
-    itemList.add(olderSectionTitleViewModel)
-    for (promotedStory in olderPlayedStoryList) {
-      val ongoingStoryViewModel = getOngoingStoryViewModel(promotedStory)
-      itemList.add(ongoingStoryViewModel)
-    }
-  }
-
-  private fun addRecommendedStoryListSection(suggestedStoryList: List<PromotedStory>) {
-    val showDivider = itemList.isNotEmpty()
-    val recommendedSectionTitleViewModel =
-      SectionTitleViewModel(
-        activity.getString(R.string.recommended_stories),
-        showDivider
-      )
-    itemList.add(recommendedSectionTitleViewModel)
-    for (suggestedStory in suggestedStoryList) {
-      val ongoingStoryViewModel = getOngoingStoryViewModel(suggestedStory)
-      itemList.add(ongoingStoryViewModel)
-    }
   }
 
   private fun getAssumedSuccessfulPromotedActivityList(): LiveData<PromotedActivityList> {
